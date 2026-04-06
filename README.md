@@ -47,8 +47,8 @@ streamlit python streamlit_app.py
 ### 1. Chunking Strategy
 
 * Used **RecursiveCharacterTextSplitter**
-* Chunk size: ~500–800 tokens
-* Overlap: ~50–100 tokens
+* Chunk size: 600 tokens
+* Overlap: 200 tokens
 * Reason: Maintains context continuity while optimizing retrieval
 
 ---
