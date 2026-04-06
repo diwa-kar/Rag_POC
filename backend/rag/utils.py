@@ -1,13 +1,17 @@
-import fitz  # PyMuPDF
+# import fitz  # PyMuPDF
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
+# from pypdf import PdfReader
+
+import pdfplumber
+
 def extract_text_from_pdf(file_path):
-    doc = fitz.open(file_path)
     pages = []
 
-    for i, page in enumerate(doc):
-        text = page.get_text()
-        pages.append({"text": text, "page": i + 1})
+    with pdfplumber.open(file_path) as pdf:
+        for i, page in enumerate(pdf.pages):
+            text = page.extract_text()
+            pages.append({"text": text, "page": i + 1})
 
     return pages
 
@@ -28,5 +32,6 @@ def chunk_documents(pages):
                 "page": page["page"],
                 "chunk_id": f"p{page['page']}_c{i}"  # 👈 ADD THIS
             })
+    
 
     return docs

@@ -11,8 +11,6 @@ from rag.memory import add_message, get_history
 from rag.query_rewriter import rewrite_query
 
 app = FastAPI()
-
-
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
@@ -54,7 +52,7 @@ async def query_pdf(session_id: str, query: str):
         "sources": [
             {
                 "page": c["page"],
-                "snippet": c["content"][:200],
+                "snippet": c["content"],
                 "chunk_id": c["chunk_id"]
             }
             for c in contexts

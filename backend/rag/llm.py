@@ -11,7 +11,7 @@ def build_prompt(query, contexts, history):
     context_text = ""
 
     for i, ctx in enumerate(contexts):
-        snippet = ctx["content"][:200]
+        snippet = ctx["content"]
 
         context_text += (
             f"[Source {i+1} | Page {ctx['page']} | ID {ctx['chunk_id']}]\n"
@@ -23,14 +23,23 @@ def build_prompt(query, contexts, history):
     )
 
     prompt = f"""
-You are a strict document QA assistant.
+You are a helpful and precise document QA assistant.
 
-Rules:
-- Answer ONLY from context
-- Cite sources like (Page X)
-- If unsure, say "Not in document"
-- Do NOT hallucinate
-- Analyse the context, provide the answer with effectient and sufficient way.
+Guidelines:
+- Primarily use the provided context to answer.
+- If the exact answer is not explicitly stated, you may make a reasonable inference based on the context.
+- Prefer giving a useful, human-like answer rather than rejecting the question.
+- If you infer, clearly indicate it (e.g., "Based on the context..." or "It can be inferred that...").
+- If the question is completely unrelated to the context, politely say so.
+- If you find the question refers to multiple context, try to consolidate and summarize things in detail and clear.4
+- Never miss out any of the information found in context
+
+Citation Rules:
+- Cite sources like (Page X) when directly using context.
+- If partially inferred, still ground your answer in the closest relevant context.
+
+Key Note:
+Context provided are retrieved from vector DB to provide information, summarize your answer accordingly.
 
 Chat History:
 {history_text}
@@ -41,14 +50,11 @@ Context:
 Question:
 {query}
 """
-
     return prompt
 
 def generate_answer(query, contexts, history):
     # Build improved prompt (with history + citations)
     prompt = build_prompt(query, contexts, history)
-
-    print("printing generation prompt", prompt)
 
     try:
         response = client.chat.completions.create(
@@ -58,9 +64,12 @@ def generate_answer(query, contexts, history):
                 {
                     "role": "system",
                     "content": (
-                        "You are a precise document QA assistant. "
+                        "You are Generative model used to summarize and provide answers in RAG application"
+                        "You are a precise document QA assistant."
                         "Only answer from provided context."
                         "Always include citations (Page X)."
+                        "Try to provide answers before completely saying not in the context"
+                        "Also recommend a follow up questions each time in the end of answer from the retrieved context and history - 'can I type of question'"
                     )
                 },
                 {
