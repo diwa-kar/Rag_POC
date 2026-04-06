@@ -85,6 +85,7 @@ streamlit python streamlit_app.py
   * chat history
   * user query
 * Generate grounded response with citations
+* gpt-4o-mini model has been used for generation
 
 ---
 
