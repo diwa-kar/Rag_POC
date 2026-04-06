@@ -20,6 +20,7 @@ git clone https://github.com/diwa-kar/Rag_POC.git
 
 ```bash
 pip install -r requirements.txt
+# for both front and backend
 ```
 
 ### 3. Set environment variables
