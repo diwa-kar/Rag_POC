@@ -165,14 +165,9 @@ RAG_POC/
 Includes:
 
 * PDF upload
-* 5+ queries
+* 5 queries
 * citations
 * follow-up interaction
 
 ---
 
-## 🧾 Prompt Logs
-
-Attached separately as required.
-
----
