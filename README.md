@@ -13,8 +13,7 @@ The system extracts content from the PDF, converts it into embeddings, stores it
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repo-link>
-cd <repo-name>
+git clone https://github.com/diwa-kar/Rag_POC.git
 ```
 
 ### 2. Install dependencies
