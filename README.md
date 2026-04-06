@@ -34,7 +34,10 @@ OPENAI_API_KEY=your_api_key
 ### 4. Run the application
 
 ```bash
-streamlit run app.py
+# backend
+uvicorn app:app --reload
+# frontend
+streamlit python streamlit_app.py
 ```
 
 ---
@@ -68,7 +71,7 @@ streamlit run app.py
 
 ### 4. Retrieval Strategy
 
-* Top-K similarity search (k=3–5)
+* Top-K similarity search (k=20)
 * Reason: Ensures relevant context without overwhelming the LLM
 
 ---
@@ -108,7 +111,6 @@ streamlit run app.py
 
 * Complex PDFs (tables/images) may lose structure
 * Long documents may need better chunking strategies
-* No reranking (can be improved)
 * Depends on embedding quality
 
 ---
@@ -126,15 +128,37 @@ Tested with 5–10 questions:
 ## 📁 Folder Structure
 
 ```
-.
-├── app.py
+RAG_POC/
+│
 ├── backend/
-├── storage/
-├── requirements.txt
+│   ├── rag/
+│   │   ├── ingest.py
+│   │   ├── llm.py
+│   │   ├── memory.py
+│   │   ├── query_rewriter.py
+│   │   ├── retriever.py
+│   │   ├── utils.py
+│   │   ├── __pycache__/
+│   │
+│   ├── storage/
+│   │   ├── index.faiss
+│   │   ├── index.pkl
+│   │
+│   ├── uploads/
+│   │   └── <uploaded_pdfs>
+│   │
+│   ├── app.py
+│   ├── .env
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── streamlit_app.py
+│   └── requirements.txt
+│
+├── .gitignore
 └── README.md
 ```
 
----
 
 ## 🎥 Demo
 
