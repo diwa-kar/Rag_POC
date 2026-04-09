@@ -37,7 +37,7 @@ OPENAI_API_KEY=your_api_key
 # backend
 uvicorn app:app --reload
 # frontend
-streamlit python streamlit_app.py
+streamlit run streamlit_app.py
 ```
 
 ---
